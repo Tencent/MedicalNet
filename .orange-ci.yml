@@ -1,0 +1,33 @@
+master: 
+  merge_request:
+    - stages:
+      - name: make commitlist
+        type: git:commitList
+        options: 
+          toFile: commits-data.json
+      - name: do commitlint
+        image: csighub.tencentyun.com/plugins/commitlint
+        settings:
+          from_file: commits-data.json
+  push:
+    - network: idc-ai-sse4
+      stages:
+        - name: testing phase
+          image: cshwhale/dockerfiles:latest
+          commands:
+          - python train.py --ci_test
+
+$:
+  tag_push:
+    - stages:
+        - name: changelog
+          type: git:changeLog
+          options:
+            filename: CHANGELOG.md
+            target: master
+          envExport:
+            latestChangeLog: LATEST_CHANGE_LOG
+        - name: upload release
+          type: git:release
+          options:
+            description: ${LATEST_CHANGE_LOG}

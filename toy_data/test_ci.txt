@@ -1,0 +1,1 @@
+MRBrainS18/070/reg_T1.nii.gz MRBrainS18/070/segm_3label_13_merge.nii.gz
