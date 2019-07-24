@@ -88,6 +88,7 @@ Unzip and move files
 mv MedicalNet_pytorch_files.zip MedicalNet/.
 cd MedicalNet
 unzip MedicalNet_pytorch_files.zip
+mv ./MedicalNet_pytorch_files/* .
 ```
 2. Running the training code (e.g. 3D-ResNet-50)
 ```
