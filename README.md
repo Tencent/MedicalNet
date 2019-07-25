@@ -82,13 +82,12 @@ resnet-200.pth: --model resnet --model_depth 200 --resnet_shortcut B
 ```
 git clone https://github.com/cshwhale/MedicalNet
 ```
-2. Downloading [data & pre-trained models](https://drive.google.com/file/d/1GvuvccLevWm4Lj8GTsKqLumjokoCA5Tw/view?usp=sharing)
+2. Downloading [data & pre-trained models](https://drive.google.com/file/d/1mVmKX2la-vLo9GuSJOtcFNwcokmhju4i/view?usp=sharing)
 Unzip and move files
 ```
 mv MedicalNet_pytorch_files.zip MedicalNet/.
 cd MedicalNet
 unzip MedicalNet_pytorch_files.zip
-mv ./MedicalNet_pytorch_files/* .
 ```
 2. Running the training code (e.g. 3D-ResNet-50)
 ```
