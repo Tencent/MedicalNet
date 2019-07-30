@@ -18,14 +18,68 @@ If you use this code or pre-trained models, please cite the following:
         year={2019}
     }
 ```
-	
+### Update(2019/07/30)
+We uploaded 4 pre-trained models based on more datasets (23 datasets).
+```
+Model name             : parameters settings
+resnet_10_23dataset.pth: --model resnet --model_depth 10 --resnet_shortcut B
+resnet_18_23dataset.pth: --model resnet --model_depth 18 --resnet_shortcut A
+resnet_34_23dataset.pth: --model resnet --model_depth 34 --resnet_shortcut A
+resnet_50_23dataset.pth: --model resnet --model_depth 50 --resnet_shortcut B
+```
+We transferred the above pre-trained models to the multi-class segmentation task (left lung, right lung and background) on Visceral dataset. The results are as follows:
+<table class="dataintable">
+<tr>
+   <th>Network</th>
+   <th>Pretrain</th>
+   <th>LungSeg(Dice)</th>
+</tr>
+<tr>
+   <td rowspan="2">3D-ResNet10</td>
+   <td>Train from scratch</td>
+   <td>69.31%</td>
+</tr>
+<tr>
+    <td>MedicalNet</td>
+    <td>96.56%</td>
+</tr>
+<tr>
+   <td rowspan="2">3D-ResNet18</td>
+   <td>Train from scratch</td>
+   <td>70.89%</td>
+</tr>
+<tr>
+    <td>MedicalNet</td>
+    <td>94.68%</td>
+</tr>
+<tr>
+   <td rowspan="2">3D-ResNet34</td>
+   <td>Train from scratch</td>
+   <td>75.25%</td>
+</tr>
+<tr>
+    <td>MedicalNet</td>
+    <td>94.14%</td>
+</tr>
+<tr>
+   <td rowspan="2">3D-ResNet50</td>
+   <td>Train from scratch</td>
+   <td>52.94%</td>
+</tr>
+<tr>
+    <td>MedicalNet</td>
+    <td>89.25%</td>
+</tr>
+</table>
+
+
 ### Contents
 1. [Requirements](#Requirements)
 2. [Installation](#Installation)
 3. [Demo](#Demo)
 4. [Experiments](#Experiments)
 5. [TODO](#TODO)
-5. [Acknowledgement](#Acknowledgement)
+6. [Acknowledgement](#Acknowledgement)
 
 ### Requirements
 - Python 3.7.0
@@ -68,13 +122,13 @@ MedicalNet/
 - Network structure parameter settings
 ```
 Model name   : parameters settings
-resnet-10.pth: --model resnet --model_depth 10 --resnet_shortcut B
-resnet-18.pth: --model resnet --model_depth 18 --resnet_shortcut A
-resnet-34.pth: --model resnet --model_depth 34 --resnet_shortcut A
-resnet-50.pth: --model resnet --model_depth 50 --resnet_shortcut B
-resnet-101.pth: --model resnet --model_depth 101 --resnet_shortcut B
-resnet-152.pth: --model resnet --model_depth 152 --resnet_shortcut B
-resnet-200.pth: --model resnet --model_depth 200 --resnet_shortcut B
+resnet_10.pth: --model resnet --model_depth 10 --resnet_shortcut B
+resnet_18.pth: --model resnet --model_depth 18 --resnet_shortcut A
+resnet_34.pth: --model resnet --model_depth 34 --resnet_shortcut A
+resnet_50.pth: --model resnet --model_depth 50 --resnet_shortcut B
+resnet_101.pth: --model resnet --model_depth 101 --resnet_shortcut B
+resnet_152.pth: --model resnet --model_depth 152 --resnet_shortcut B
+resnet_200.pth: --model resnet --model_depth 200 --resnet_shortcut B
 ```
 
 - After successfully completing basic installation, you'll be ready to run the demo.
@@ -82,20 +136,20 @@ resnet-200.pth: --model resnet --model_depth 200 --resnet_shortcut B
 ```
 git clone https://github.com/cshwhale/MedicalNet
 ```
-2. Downloading [data & pre-trained models](https://drive.google.com/file/d/1mVmKX2la-vLo9GuSJOtcFNwcokmhju4i/view?usp=sharing)
+2. Downloading [data & pre-trained models](https://drive.google.com/file/d/1N8U1EImXmXwt0fL6PsULU3oYTBzC45jm/view?usp=sharing)
 Unzip and move files
 ```
 mv MedicalNet_pytorch_files.zip MedicalNet/.
 cd MedicalNet
 unzip MedicalNet_pytorch_files.zip
 ```
-2. Running the training code (e.g. 3D-ResNet-50)
+3. Running the training code (e.g. 3D-ResNet-50)
 ```
 python train.py --gpu_id 0 1    # multi-gpu training on gpu 0,1
 or
 python train.py --gpu_id 0    # single-gpu training on gpu 0
 ```
-3. Running the testing code (e.g. 3D-ResNet-50)
+4. Running the testing code (e.g. 3D-ResNet-50)
 ```
 python test.py --gpu_id 0 --resume_path trails/models/resnet_50_epoch_200_batch_0.pth --img_list data/val.txt
 ```
