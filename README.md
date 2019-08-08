@@ -88,8 +88,9 @@ We transferred the above pre-trained models to the multi-class segmentation task
 - CUDNN 7.0.5
 
 ### Installation
-Install Python 3.7.0
-pip install -r requirements.txt
+- Install Python 3.7.0
+- pip install -r requirements.txt
+
 
 ### Demo
 - Structure of data directories
