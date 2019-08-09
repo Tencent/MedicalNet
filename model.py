@@ -83,7 +83,7 @@ def generate_model(opt):
         net_dict = model.state_dict()
     
     # load pretrain
-    if opt.pretrain_path:
+    if opt.phase != 'test' and opt.pretrain_path:
         print ('loading pretrained model {}'.format(opt.pretrain_path))
         pretrain = torch.load(opt.pretrain_path)
         pretrain_dict = {k: v for k, v in pretrain['state_dict'].items() if k in net_dict.keys()}
