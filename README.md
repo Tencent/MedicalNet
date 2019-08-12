@@ -99,18 +99,17 @@ MedicalNet is used to transfer the pre-trained model to other datasets (here the
 MedicalNet/
     |--datasets/：Data preprocessing module
     |   |--brains18.py：MRBrainS18 data preprocessing script
-	|--models/：Model construction module
+    |	|--models/：Model construction module
     |   |--resnet.py：3D-ResNet network build script
     |--utils/：tools
-	|   |--logger.py：Logging script
-	|--toy_data/：For CI test
+    |   |--logger.py：Logging script
+    |--toy_data/：For CI test
     |--data/：Data storage module
-	|   |--MRBrainS18/：MRBrainS18 dataset
-	|   |	|.../：A folder named with patient ID
-	|   |	|	|reg_T1.nii.gz/：image
-	|   |	|	|segm_3label_13_merge.nii.gz/：label
-	|   |--train.txt: training data lists
-	|   |--val.txt: validation data lists
+    |   |--MRBrainS18/：MRBrainS18 dataset
+    |	|   |--images/：source image named with patient ID
+    |	|   |--labels/：masks named with patient ID
+    |   |--train.txt: training data lists
+    |   |--val.txt: validation data lists
     |--pretrain/：Pre-trained models storage module
     |--model.py: Network processing script
     |--setting.py: Parameter setting script
@@ -137,7 +136,7 @@ resnet_200.pth: --model resnet --model_depth 200 --resnet_shortcut B
 ```
 git clone https://github.com/cshwhale/MedicalNet
 ```
-2. Downloading [data & pre-trained models](https://drive.google.com/file/d/1N8U1EImXmXwt0fL6PsULU3oYTBzC45jm/view?usp=sharing)
+2. Downloading [data & pre-trained models](https://drive.google.com/file/d/1399AsrYpQDi1vq6ciKRQkfknLsQQyigM/view?usp=sharing)
 Unzip and move files
 ```
 mv MedicalNet_pytorch_files.zip MedicalNet/.
