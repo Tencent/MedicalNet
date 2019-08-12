@@ -107,7 +107,7 @@ MedicalNet/
     |--data/：Data storage module
     |   |--MRBrainS18/：MRBrainS18 dataset
     |	|   |--images/：source image named with patient ID
-    |	|   |--labels/：masks named with patient ID
+    |	|   |--labels/：mask named with patient ID
     |   |--train.txt: training data lists
     |   |--val.txt: validation data lists
     |--pretrain/：Pre-trained models storage module
