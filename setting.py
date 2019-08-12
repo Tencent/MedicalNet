@@ -35,12 +35,12 @@ def parse_opts():
         type=int,
         help='Number of jobs')
     parser.add_argument(
-        '--batch_size', default=2, type=int, help='Batch Size')
+        '--batch_size', default=1, type=int, help='Batch Size')
     parser.add_argument(
         '--phase', default='train', type=str, help='Phase of train or test')
     parser.add_argument(
         '--save_intervals',
-        default=100,
+        default=10,
         type=int,
         help='Interation for saving model')
     parser.add_argument(

@@ -43,7 +43,7 @@ class BrainS18Dataset(Dataset):
             label_name = os.path.join(self.root_dir, ith_info[1])
             assert os.path.isfile(img_name)
             assert os.path.isfile(label_name)
-            img = nibabel.load(img_name)
+            img = nibabel.load(img_name)  # We have transposed the data from WHD format to DHW
             assert img is not None
             mask = nibabel.load(label_name)
             assert mask is not None
