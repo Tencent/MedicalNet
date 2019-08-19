@@ -136,7 +136,7 @@ resnet_200.pth: --model resnet --model_depth 200 --resnet_shortcut B
 ```
 git clone https://github.com/cshwhale/MedicalNet
 ```
-2. Downloading data & pre-trained models ([Google Drive](https://drive.google.com/file/d/1399AsrYpQDi1vq6ciKRQkfknLsQQyigM/view?usp=sharing) or [Tencent Weiyun](https://share.weiyun.com/55sZyIx))
+2. Download data & pre-trained models ([Google Drive](https://drive.google.com/file/d/1399AsrYpQDi1vq6ciKRQkfknLsQQyigM/view?usp=sharing) or [Tencent Weiyun](https://share.weiyun.com/55sZyIx))
 
     Unzip and move files
 ```
@@ -144,13 +144,13 @@ mv MedicalNet_pytorch_files.zip MedicalNet/.
 cd MedicalNet
 unzip MedicalNet_pytorch_files.zip
 ```
-3. Running the training code (e.g. 3D-ResNet-50)
+3. Run the training code (e.g. 3D-ResNet-50)
 ```
 python train.py --gpu_id 0 1    # multi-gpu training on gpu 0,1
 or
 python train.py --gpu_id 0    # single-gpu training on gpu 0
 ```
-4. Running the testing code (e.g. 3D-ResNet-50)
+4. Run the testing code (e.g. 3D-ResNet-50)
 ```
 python test.py --gpu_id 0 --resume_path trails/models/resnet_50_epoch_200_batch_0.pth --img_list data/val.txt
 ```
