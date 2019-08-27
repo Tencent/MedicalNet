@@ -152,7 +152,7 @@ python train.py --gpu_id 0    # single-gpu training on gpu 0
 ```
 4. Run the testing code (e.g. 3D-ResNet-50)
 ```
-python test.py --gpu_id 0 --resume_path trails/models/resnet_50_epoch_200_batch_0.pth --img_list data/val.txt
+python test.py --gpu_id 0 --resume_path trails/models/resnet_50_epoch_110_batch_0.pth.tar --img_list data/val.txt
 ```
 
 ### Experiments
