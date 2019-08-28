@@ -4,12 +4,14 @@ from model import generate_model
 import torch
 import numpy as np
 from torch.utils.data import DataLoader
+import torch.nn.functional as F
 from scipy import ndimage
 import nibabel as nib
 import sys
 import os
 from utils.file_process import load_lines
 import numpy as np
+
 
 def seg_eval(pred, label, clss):
     """
@@ -53,6 +55,7 @@ def test(data_loader, model, img_names, sets):
             volume = volume.cuda()
         with torch.no_grad():
             probs = model(volume)
+            probs = F.softmax(probs, dim=1)
 
         # resize mask to original size
         [batchsize, _, mask_d, mask_h, mask_w] = probs.shape
