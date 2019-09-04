@@ -134,7 +134,7 @@ resnet_200.pth: --model resnet --model_depth 200 --resnet_shortcut B
 - After successfully completing basic installation, you'll be ready to run the demo.
 1. Clone the MedicalNet repository
 ```
-git clone https://github.com/cshwhale/MedicalNet
+git clone https://github.com/Tencent/MedicalNet
 ```
 2. Download data & pre-trained models ([Google Drive](https://drive.google.com/file/d/1399AsrYpQDi1vq6ciKRQkfknLsQQyigM/view?usp=sharing) or [Tencent Weiyun](https://share.weiyun.com/55sZyIx))
 
