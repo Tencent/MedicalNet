@@ -308,7 +308,7 @@ Results of transfer MedicalNet pre-trained models to lung segmentation (LungSeg)
 - [x] Training with multi-gpu
 - [ ] 3D efficient pre-trained models（e.g., 3D-MobileNet, 3D-ShuffleNet）
 - [ ] 2D medical pre-trained models
-- [ ] Pre-trained MedicalNet models based on more medical dataset
+- [x] Pre-trained MedicalNet models based on more medical dataset
 
 ### Acknowledgement
 We thank [3D-ResNets-PyTorch](https://github.com/kenshohara/3D-ResNets-PyTorch) and [MRBrainS18](https://mrbrains18.isi.uu.nl/) which we build MedicalNet refer to this releasing code and the dataset.
