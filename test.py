@@ -91,7 +91,7 @@ if __name__ == '__main__':
     img_names = [info.split(" ")[0] for info in load_lines(sets.img_list)]
     masks = test(data_loader, net, img_names, sets)
     
-    # calculate dice
+    # evaluation: calculate dice 
     label_names = [info.split(" ")[1] for info in load_lines(sets.img_list)]
     Nimg = len(label_names)
     dices = np.zeros([Nimg, sets.n_seg_classes])
