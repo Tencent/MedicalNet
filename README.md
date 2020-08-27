@@ -136,7 +136,7 @@ resnet_200.pth: --model resnet --model_depth 200 --resnet_shortcut B
 ```
 git clone https://github.com/Tencent/MedicalNet
 ```
-2. Download data & pre-trained models ([Google Drive](https://drive.google.com/file/d/1399AsrYpQDi1vq6ciKRQkfknLsQQyigM/view?usp=sharing) or [Tencent Weiyun](https://share.weiyun.com/55sZyIx))
+2. Download data & pre-trained models ([Google Drive](https://drive.google.com/file/d/13tnSvXY7oDIEloNFiGTsjUIYfS3g3BfG/view?usp=sharing) or [Tencent Weiyun](https://share.weiyun.com/55sZyIx))
 
     Unzip and move files
 ```
