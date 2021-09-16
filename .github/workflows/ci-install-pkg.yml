@@ -1,0 +1,56 @@
+name: Install package
+
+# see: https://help.github.com/en/actions/reference/events-that-trigger-workflows
+on:  # Trigger the workflow on push or pull request, but only for the main branch
+  push:
+    branches: [master]
+  pull_request: {}
+
+jobs:
+  pkg-check:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Check package
+        run: |
+          pip install check-manifest
+          check-manifest
+          python setup.py check --metadata --strict
+
+      - name: Create package
+        run: |
+          pip install --upgrade setuptools wheel
+          python setup.py sdist bdist_wheel
+
+      - name: Verify package
+        run: |
+          pip install twine==3.2
+          twine check dist/*
+
+  pkg-install:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04]
+        python-version: [3.7, 3.9]
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Create package
+        run: |
+          python setup.py sdist
+
+      - name: Install package
+        run: |
+          pip install dist/*
+          cd .. & python -c "import med3d ; print(med3d.__version__)"

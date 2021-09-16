@@ -33,6 +33,7 @@ setup(
     url=med3d.__homepage__,
     license=med3d.__license__,
     packages=find_packages(exclude=['tests', 'docs']),
+    long_description_content_type='text/markdown',
     include_package_data=True,
     zip_safe=False,
     keywords=['deep learning', 'pytorch', 'AI'],
