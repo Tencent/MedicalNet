@@ -1,0 +1,6 @@
+__version__ = "0.1.0"
+__docs__ = "MedicalNet 3D"
+__author__ = "Sihong Chen"
+__author_email__ = "TBD"
+__homepage__ = "https://github.com/Tencent/MedicalNet"
+__license__ = "TBD"
