@@ -1,6 +1,0 @@
-pipeline:
-  build:
-     name: testing phase
-     image: cshwhale/dockerfiles:latest
-     commands:
-     - python train.py --ci_test
