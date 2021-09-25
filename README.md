@@ -97,12 +97,17 @@ We transferred the above pre-trained models to the multi-class segmentation task
 ```
 MedicalNet is used to transfer the pre-trained model to other datasets (here the MRBrainS18 dataset is used as an example).
 MedicalNet/
-    |--datasets/：Data preprocessing module
-    |   |--brains18.py：MRBrainS18 data preprocessing script
-    |	|--models/：Model construction module
-    |   |--resnet.py：3D-ResNet network build script
-    |--utils/：tools
-    |   |--logger.py：Logging script
+    |--med3d
+    |   |--datasets/：Data preprocessing module
+    |   |   |--brains18.py：MRBrainS18 data preprocessing script
+    |   |--models/：Model construction module
+    |   |   |--resnet.py：3D-ResNet network build script
+    |   |--utils/：tools
+    |   |   |--logger.py：Logging script
+    |   |--model.py: Network processing script
+    |   |--setting.py: Parameter setting script
+    |   |--train.py: MRBrainS18 training demo script
+    |   |--test.py: MRBrainS18 testing demo script
     |--toy_data/：For CI test
     |--data/：Data storage module
     |   |--MRBrainS18/：MRBrainS18 dataset
@@ -111,10 +116,6 @@ MedicalNet/
     |   |--train.txt: training data lists
     |   |--val.txt: validation data lists
     |--pretrain/：Pre-trained models storage module
-    |--model.py: Network processing script
-    |--setting.py: Parameter setting script
-    |--train.py: MRBrainS18 training demo script
-    |--test.py: MRBrainS18 testing demo script
     |--requirement.txt: Dependent library list
     |--README.md
 ```

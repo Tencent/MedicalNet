@@ -1,15 +1,13 @@
 from setting import parse_opts 
-from datasets.brains18 import BrainS18Dataset
+from med3d.datasets.brains18 import BrainS18Dataset
 from model import generate_model
 import torch
-import numpy as np
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
 from scipy import ndimage
 import nibabel as nib
-import sys
 import os
-from utils.file_process import load_lines
+from med3d.utils.file_process import load_lines
 import numpy as np
 
 
