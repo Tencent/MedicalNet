@@ -4,5 +4,5 @@ pip>=9.0.1
 torch==0.4.1
 numpy==1.15.4
 nibabel==2.4.1
-scipy==1.1.0
+scipy==1.10.0
 argparse==1.1
