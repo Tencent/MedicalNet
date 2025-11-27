@@ -1,7 +1,9 @@
 import torch
 from torch import nn
 from models import resnet
-
+import torch.serialization
+__name__='models.resnet'
+SAFE_GLOBALS = [__name__]
 
 def generate_model(opt):
     assert opt.model in [
@@ -81,11 +83,32 @@ def generate_model(opt):
             net_dict = model.state_dict()
     else:
         net_dict = model.state_dict()
-    
-    # load pretrain
+
+
     if opt.phase != 'test' and opt.pretrain_path:
-        print ('loading pretrained model {}'.format(opt.pretrain_path))
-        pretrain = torch.load(opt.pretrain_path)
+        print(f'正在加载预训练模型 {opt.pretrain_path}')
+        try:
+            with torch.serialization.safe_globals(SAFE_GLOBALS):
+                pretrain = torch.load(
+                    opt.pretrain_path,
+                    weights_only=True,
+                    map_location='cpu'  
+                )
+        
+        except FileNotFoundError:
+            raise FileNotFoundError(f"预训练模型文件不存在: {opt.pretrain_path}")
+        except RuntimeError as e:
+            if "is not in the safe globals list" in str(e):
+                raise RuntimeError(
+                    f"加载模型时安全检查失败！请将相关模块添加到白名单。错误详情：{e}\n"
+                    f"当前白名单模块：{SAFE_GLOBALS}"
+                ) from e
+            else:
+                raise RuntimeError(f"加载预训练模型失败：{e}") from e
+        except Exception as e:
+            raise Exception(f"加载模型时发生未知错误：{e}") from e
+        
+        
         pretrain_dict = {k: v for k, v in pretrain['state_dict'].items() if k in net_dict.keys()}
          
         net_dict.update(pretrain_dict)
