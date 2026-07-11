@@ -315,3 +315,7 @@ We thank [3D-ResNets-PyTorch](https://github.com/kenshohara/3D-ResNets-PyTorch) 
 
 ### Contribution
 If you want to contribute to MedicalNet, be sure to review the [contribution guidelines](https://github.com/Tencent/MedicalNet/blob/master/CONTRIBUTING.md)
+
+---
+
+*[Mukller](https://github.com/Mukller)*
