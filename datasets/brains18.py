@@ -11,12 +11,13 @@ import numpy as np
 from torch.utils.data import Dataset
 import nibabel
 from scipy import ndimage
+from utils.file_process import load_lines
+from utils.path_security import safe_image_path
 
 class BrainS18Dataset(Dataset):
 
     def __init__(self, root_dir, img_list, sets):
-        with open(img_list, 'r') as f:
-            self.img_list = [line.strip() for line in f]
+        self.img_list = load_lines(img_list, root_dir=root_dir)
         print("Processing {} datas".format(len(self.img_list)))
         self.root_dir = root_dir
         self.input_D = sets.input_D
@@ -38,11 +39,11 @@ class BrainS18Dataset(Dataset):
         
         if self.phase == "train":
             # read image and labels
-            ith_info = self.img_list[idx].split(" ")
-            img_name = os.path.join(self.root_dir, ith_info[0])
-            label_name = os.path.join(self.root_dir, ith_info[1])
-            assert os.path.isfile(img_name)
-            assert os.path.isfile(label_name)
+            ith_info = self.img_list[idx].split()
+            if len(ith_info) != 2:
+                raise ValueError("Training rows must contain an image and a label.")
+            img_name = safe_image_path(self.root_dir, ith_info[0])
+            label_name = safe_image_path(self.root_dir, ith_info[1])
             img = nibabel.load(img_name)  # We have transposed the data from WHD format to DHW
             assert img is not None
             mask = nibabel.load(label_name)
@@ -60,10 +61,9 @@ class BrainS18Dataset(Dataset):
         
         elif self.phase == "test":
             # read image
-            ith_info = self.img_list[idx].split(" ")
-            img_name = os.path.join(self.root_dir, ith_info[0])
+            ith_info = self.img_list[idx].split()
+            img_name = safe_image_path(self.root_dir, ith_info[0])
             print(img_name)
-            assert os.path.isfile(img_name)
             img = nibabel.load(img_name)
             assert img is not None
 
@@ -153,7 +153,7 @@ class BrainS18Dataset(Dataset):
         """ 
         [depth, height, width] = data.shape
         scale = [self.input_D*1.0/depth, self.input_H*1.0/height, self.input_W*1.0/width]  
-        data = ndimage.interpolation.zoom(data, scale, order=0)
+        data = ndimage.zoom(data, scale, order=0)
 
         return data
 
@@ -169,8 +169,8 @@ class BrainS18Dataset(Dataset):
 
     def __training_data_process__(self, data, label): 
         # crop data according net input size
-        data = data.get_data()
-        label = label.get_data()
+        data = np.asanyarray(data.dataobj)
+        label = np.asanyarray(label.dataobj)
         
         # drop out the invalid range
         data, label = self.__drop_invalid_range__(data, label)
@@ -190,7 +190,7 @@ class BrainS18Dataset(Dataset):
 
     def __testing_data_process__(self, data): 
         # crop data according net input size
-        data = data.get_data()
+        data = np.asanyarray(data.dataobj)
 
         # resize data
         data = self.__resize_data__(data)

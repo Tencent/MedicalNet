@@ -14,6 +14,7 @@ from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 import time
 from utils.logger import log
+from utils.checkpoint import load_checkpoint
 from scipy import ndimage
 import os
 
@@ -55,7 +56,7 @@ def train(data_loader, model, optimizer, scheduler, total_epochs, save_interval,
                 [ori_c, ori_d, ori_h, ori_w] = label_mask.shape 
                 label_mask = np.reshape(label_mask, [ori_d, ori_h, ori_w])
                 scale = [d*1.0/ori_d, h*1.0/ori_h, w*1.0/ori_w]
-                label_mask = ndimage.interpolation.zoom(label_mask, scale, order=0)
+                label_mask = ndimage.zoom(label_mask, scale, order=0)
                 new_label_masks[label_id] = label_mask
 
             new_label_masks = torch.tensor(new_label_masks).to(torch.int64)
@@ -84,7 +85,7 @@ def train(data_loader, model, optimizer, scheduler, total_epochs, save_interval,
                     
                     log.info('Save checkpoints: epoch = {}, batch_id = {}'.format(epoch, batch_id)) 
                     torch.save({
-                                'ecpoch': epoch,
+                                'epoch': epoch,
                                 'batch_id': batch_id,
                                 'state_dict': model.state_dict(),
                                 'optimizer': optimizer.state_dict()},
@@ -118,7 +119,7 @@ if __name__ == '__main__':
     model, parameters = generate_model(sets) 
     print (model)
     # optimizer
-    if sets.ci_test:
+    if not isinstance(parameters, dict):
         params = [{'params': parameters, 'lr': sets.learning_rate}]
     else:
         params = [
@@ -130,13 +131,15 @@ if __name__ == '__main__':
     
     # train from resume
     if sets.resume_path:
+        if not os.path.isfile(sets.resume_path):
+            raise FileNotFoundError(sets.resume_path)
         if os.path.isfile(sets.resume_path):
             print("=> loading checkpoint '{}'".format(sets.resume_path))
-            checkpoint = torch.load(sets.resume_path)
+            checkpoint = load_checkpoint(sets.resume_path, require_optimizer=True)
             model.load_state_dict(checkpoint['state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer'])
             print("=> loaded checkpoint '{}' (epoch {})"
-              .format(sets.resume_path, checkpoint['epoch']))
+              .format(sets.resume_path, checkpoint.get('epoch', checkpoint.get('ecpoch', 'unknown'))))
 
     # getting data
     sets.phase = 'train'

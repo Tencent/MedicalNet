@@ -9,7 +9,8 @@ from scipy import ndimage
 import nibabel as nib
 import sys
 import os
-from utils.file_process import load_lines
+from utils.path_security import safe_image_path
+from utils.checkpoint import load_checkpoint
 import numpy as np
 
 
@@ -59,12 +60,12 @@ def test(data_loader, model, img_names, sets):
 
         # resize mask to original size
         [batchsize, _, mask_d, mask_h, mask_w] = probs.shape
-        data = nib.load(os.path.join(sets.data_root, img_names[batch_id]))
-        data = data.get_data()
+        data = nib.load(safe_image_path(sets.data_root, img_names[batch_id]))
+        data = np.asanyarray(data.dataobj)
         [depth, height, width] = data.shape
-        mask = probs[0]
+        mask = probs[0].detach().cpu().numpy()
         scale = [1, depth*1.0/mask_d, height*1.0/mask_h, width*1.0/mask_w]
-        mask = ndimage.interpolation.zoom(mask, scale, order=1)
+        mask = ndimage.zoom(mask, scale, order=1)
         mask = np.argmax(mask, axis=0)
         
         masks.append(mask)
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     sets.phase = 'test'
 
     # getting model
-    checkpoint = torch.load(sets.resume_path)
+    checkpoint = load_checkpoint(sets.resume_path)
     net, _ = generate_model(sets)
     net.load_state_dict(checkpoint['state_dict'])
 
@@ -88,16 +89,19 @@ if __name__ == '__main__':
     data_loader = DataLoader(testing_data, batch_size=1, shuffle=False, num_workers=1, pin_memory=False)
 
     # testing
-    img_names = [info.split(" ")[0] for info in load_lines(sets.img_list)]
+    rows = [info.split() for info in testing_data.img_list]
+    if any(len(row) != 2 for row in rows):
+        raise ValueError("Evaluation rows must contain an image and a label.")
+    img_names = [row[0] for row in rows]
     masks = test(data_loader, net, img_names, sets)
     
     # evaluation: calculate dice 
-    label_names = [info.split(" ")[1] for info in load_lines(sets.img_list)]
+    label_names = [row[1] for row in rows]
     Nimg = len(label_names)
     dices = np.zeros([Nimg, sets.n_seg_classes])
     for idx in range(Nimg):
-        label = nib.load(os.path.join(sets.data_root, label_names[idx]))
-        label = label.get_data()
+        label = nib.load(safe_image_path(sets.data_root, label_names[idx]))
+        label = np.asanyarray(label.dataobj)
         dices[idx, :] = seg_eval(masks[idx], label, range(sets.n_seg_classes))
     
     # print result

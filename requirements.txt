@@ -1,8 +1,5 @@
-# python requirements
-pip>=9.0.1
-#logging==0.4.9.6
-torch>=2.6.0
-numpy==1.15.4
-nibabel==2.4.1
-scipy==1.1.0
-argparse==1.1
+# Python >= 3.10; keep dependency security patches up to date.
+torch>=2.6.0,<3
+numpy>=1.26,<3
+nibabel>=5.2,<6
+scipy>=1.13,<2

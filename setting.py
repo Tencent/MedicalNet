@@ -11,12 +11,12 @@ def parse_opts():
         '--data_root',
         default='./data',
         type=str,
-        help='Root directory path of data')
+        help='Trusted root directory for the image list, images and labels')
     parser.add_argument(
         '--img_list',
         default='./data/train.txt',
         type=str,
-        help='Path for image list file')
+        help='Image list .txt path (relative to cwd or absolute), required to be inside data_root')
     parser.add_argument(
         '--n_seg_classes',
         default=2,

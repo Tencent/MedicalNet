@@ -82,13 +82,13 @@ We transferred the above pre-trained models to the multi-class segmentation task
 6. [Acknowledgement](#Acknowledgement)
 
 ### Requirements
-- Python 3.7.0
-- PyTorch-0.4.1
-- CUDA Version 9.0
-- CUDNN 7.0.5
+- Python 3.10 or newer (security validation uses Python 3.13)
+- PyTorch >= 2.6, < 3; use a current vendor-patched release
+- CPU is supported; for GPU, select CUDA/cuDNN supported by your PyTorch build
+- See SECURITY_FIX.md for security boundaries and migration notes
 
 ### Installation
-- Install Python 3.7.0
+- Install Python 3.10 or newer in an isolated environment
 - pip install -r requirements.txt
 
 
